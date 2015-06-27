@@ -1,0 +1,298 @@
+extends basic
+
+block append header
+  link(rel="stylesheet", href="/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css")
+  link(rel="stylesheet", href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css", type="text/css")
+  link(rel="stylesheet", href="/stylesheets/style.css", type="text/css")
+
+block content
+
+  //- registration success section
+  section.block.hidden#reg_success
+    div.container
+      div.row
+        div.col-xs-12.col-md-8.col-md-offset-2.text-center
+          h2 Thank you! <br> 感谢您报名ConnectED China Startup Idea Fair 2015
+          h3#email_addr 确认邮件已经发送至
+          p 确认邮件中包含有关缴费的详细说明。您的参赛资格将在缴费成功后锁定。如果您未能在缴费截止日前缴费，参赛资格将自动解除。详细信息请查阅邮件。
+          p 邮件中还有一份免责声明，请在参加比赛时将带有签字的打印版交予CED组委会方可参加比赛。
+          p 如果您未能收到注册成功邮件，请发邮件至#[a(href='mailto:info@connected-china.org') info@connected-china.org].
+          p 
+            | Your information has been submitted to ConnectED China. In the email you will found a detailed instruction about how to submit fees to us. 
+            | Your eligibility to participate in the idea fair is only guaranteed after we confirm to have received your fees.
+            | If you fail to submit fees prior to the deadline, your eligibility will no longer be guaranteed.
+          p There is also a disclaimer coming along with the email. Please bring a hard copy with your signature to CED so that CED can grant you permission for the contest.
+          p If you don't see the email, please eamil us at #[a(href='mailto:info@connected-china.org') info@connected-china.org].
+          p See you this summer!
+          div.row
+            div.col-xs-12.col-md-6.col-md-offset-3
+              a.btn.btn-success.btn-block(href="/") Back to ConnectED Home Page
+
+  //- do ticket introduction
+  section.block#ticket_intro
+    div.container
+      header
+        h2
+          a.roll Ticket
+      div.tickets
+        div.row
+          div.col-md-4.col-sm-4
+            div.description
+              header.equal-height
+                h3 &nbsp;
+              ul
+                - for (var i = 0; i < functions.length; i++)
+                  li #{functions[i]}
+          - var keys = Object.keys(ticket_kind);
+          - for (var i = 0; i < Object.keys(ticket_kind).length; i++)
+            - var attributes = ticket_kind[keys[i]];
+            - var price = ticket_kind[keys[i]][0];
+            div.col-md-4.col-sm-4
+              div.ticket
+                header.equal-height
+                  h3 #{keys[i]}
+                  - var priceTag = "$" + price;
+                  //- figure #{priceTag}
+                ul
+                  - for (var j = 1; j < attributes.length; j++)
+                    if attributes[j] == "y"
+                      li.checked
+                        i.fa.fa-check
+                        span #{functions[j - 1]}
+                    else
+                      li.unchecked
+                        i.fa.fa-times
+                        span #{functions[j - 1]}
+  //- registration form
+  section.block.background-color-grey-light#reg_form
+    div.container
+      header
+        h2
+          a.roll 报名表 Registration Form
+      h4.text-center 本次大赛官方语言 (Lecture及策划书撰写) 为#[u 中文]
+      form.form-horizontal(id="infoForm", method="post", action="", enctype="multipart/form-data")
+        p 基本信息 Basic Info
+        - var keys = Object.keys(basicInfo);
+        - for (var i = 0; i < keys.length; i++)
+          div.form-group
+            - var itemID = keys[i] + "_ID";
+            - var itemName = keys[i];
+            - var parsedField = basicInfo[keys[i]].split('_');
+            - parsedField =  [parsedField[0]].concat(parsedField[1].split('&'));
+            - var labelContent = parsedField[0] + " " + parsedField[1];
+            - var placeholderContent = parsedField[1];
+            label.col-sm-3.control-label(for=itemID) #{labelContent}
+            div.col-sm-9
+              if itemName == 'name'
+                input.form-control(type="text", placeholder=placeholderContent, id=itemID, name=itemName, required)
+                p 请使用与证件匹配的名字 Please use name that matches your government issued ID
+              else if itemName == "dob"
+                input.form-control(type="date", placeholder=placeholderContent id=itemID, name=itemName, required)/
+              else if itemName == "sex"
+                select.form-control(name="sex", id=itemID, required)
+                  option(value="")= "<请选择 Select One>"
+                  option(value="male") 男 Male
+                  option(value="female") 女 Female
+              else if itemName == "id_number"
+                input.form-control(type="text", placeholder=placeholderContent, id=itemID, name=itemName, maxlength=18, minlength=18, required)
+              else
+                input.form-control(type="text", placeholder=placeholderContent, id=itemID, name=itemName, required)
+        p 联系方式 Contact Info
+        - var keys = Object.keys(contactInfo);
+        - for (var i = 0; i < keys.length; i++)
+          div.form-group
+            - var itemID = keys[i] + "_ID";
+            - var itemName = keys[i];
+            - var parsedField = contactInfo[keys[i]].split('_');
+            - parsedField =  [parsedField[0]].concat(parsedField[1].split('&'));
+            - var labelContent = parsedField[0] + " " + parsedField[1];
+            - var placeholderContent = parsedField[1];
+            label.col-sm-3.control-label(for=itemID) #{labelContent}
+            div.col-sm-9
+              if parsedField[2] == 'R'
+                input.form-control(type="text", placeholder=placeholderContent, id=itemID, name=itemName, required)
+              else
+                input.form-control(type="text", placeholder=placeholderContent, id=itemID, name=itemName)
+        div.form-group
+          label.col-sm-3.control-label(for="ticket_class") 门票类型 Ticket Class
+          div.col-sm-9
+            select.selectpicker(name="ticket_class", id="ticket_class_ID", required)
+              option(value="") Select Your Pass
+              option(value="competitor") Competitors Pass
+              option(value="audience") Audience Pass
+        //- Additional Info
+        div#additional_info.hidden
+          p 附加信息 Additional Information
+          div.form-group
+            label.col-sm-3.control-label(for='self_summary') 有关于自己 About Myself
+            div.col-sm-9
+              textarea.form-control(rows="12", placeholder="Put anything about yourself that you'd like us to know, such as experience and your history with the field you're interest in.", name="self_summary", id="self_summary_ID", required)
+          div.form-group#self_resume
+            label.col-sm-3.control-label(for='self_resume') 简历（可选） Resume (Optional)
+            div.col-sm-9
+              input.form-group(type='file', name='self_resume')#self_resume_ID
+          div.form-group
+            label.col-sm-3.control-label(for='hasIdea') 你是否拥有自己的Startup Idea
+            div.col-sm-9
+              select.form-control(name='hasIdea', required)#hasIdea_ID
+                option(value='')| <请选择 Select One>
+                option(value='idea_yes') 我有自己的创业想法 I have my own idea
+                option(value='idea_no') 我还没形成自己的创业想法 I haven't yet figured it out
+          div.form-group#interest_div.hidden
+            label.col-sm-3.control-label(for="interest_field") 兴趣领域 Field of Interest
+            div.col-sm-9
+              select.form-control(name="interest_field", id="interest_field_ID", required)
+                option(value="")| <请选择 Select One>
+                option(value="technology") 技术 Technology
+                option(value="application_development") 应用开发 Application Development
+                option(value="online_business") 互联网商务 Online Business
+                option(value="other") 其它 Other
+          div.form-group.hidden#interest_other_entry
+            label.col-sm-3.control-label(for="interest_other")
+            div.col-sm-9
+              input.form-control(type="text", placeholder="Fill in Field of Interest", id="interest_other_ID", name="interest_other", required)
+          div#hasIdea_div.hidden
+            div.form-group
+              label.col-sm-3.control-label(for='project_name') 项目名称 Project Name
+              div.col-sm-9
+                input.form-control(type="text", name='project_name', placeholder='Project Name')#project_name_ID
+            div.form-group
+              label.col-sm-3.control-label(for='project_url') 项目网络地址 Project URL
+              div.col-sm-9
+                input.form-control(type="text", name='project_url', placeholder='Project URL')#project_url_ID
+            div.form-group
+              label.col-sm-3.control-label(for="project_summary") 项目简介 Brief Summary of Project
+              div.col-sm-9
+                textarea.form-control(rows="12", placeholder="Project Summary (word limit 100 words)", name="project_summary", id="project_summary_ID", required)
+          div.form-group
+            label.col-sm-3.control-label(for='hasTeam') 你是否拥有自己的团队 Are you in a team?
+            div.col-sm-9
+              select.form-control(name='hasTeam',required)#hasTeam_ID
+                option(value='')| <请选择 Select One>
+                option(value='team_yes') 我有自己的团队 I have my own team
+                option(value='tema_no') 我还没有自己的团队 I don't have my own team
+          div#competitor_team_info.hidden
+            div.form-group
+              label.col-sm-3.control-label(for="team_role") 团队角色 Team Role
+              div.col-sm-9
+                select.form-control(name="team_role", id="team_role_ID", required)
+                  option(value="")= "<请选择 Select One>"
+                  option(value="leader") 团队领队 Group Leader
+                  option(value="member") 团队成员 Group Memeber
+            div#team_role_selected.hidden
+              div.form-group#i_am_member.hidden
+                label.col-sm-3.control-label(for="team_id") 团队ID Team ID
+                div.col-sm-9
+                  input.form-control(type="text", placeholder="Team ID", name="team_id", id="team_id_ID", required)
+                  p#leader_text_chn.hidden 此ID将用作你所带领的团队的识别ID。你的团队成员将用这个ID注册进入你创立的团队。团队ID必须由"0-9"，"a-z"或"_"构成。团队ID的第一个字符必须是"a-z"。
+                  p#leader_text_en.hidden This is the ID you send to your team member so that they can use it to register as members in your team. Team ID can only contain "0-9", "a-z" and "_". It must also begin with "a-z".  
+                  p#member_text_chn.hidden 请填写团队领队提供给你的团队ID。
+                  p#member_text_en.hidden Please fill in the Team ID that your team leader provides to you.
+              div#i_am_leader.hidden
+                div.form-group
+                  label.col-sm-3.control-label(for="team_name") 团队名称 Team Name
+                  div.col-sm-9
+                    input.form-control(type="text", placeholder="Team Name", name="team_name", id="team_name_ID", required)
+                div.form-group
+                  label.col-sm-3.control-label(for="team_member_count") 团队人数 Number of Team Memebers
+                  div.col-sm-9
+                    select.form-control(name="team_member_count", id="team_member_count_ID", required)
+                      option(value="")= "<请选择 Select One>"
+                      - for (var i = 2; i <= 8; i++)
+                        option(value=i) #{i}
+                    p 最少团队为4人团队。如果团队不足4人，缺少的团队成员将由ConnectED China从没有团队的竞赛选手中匹配。
+                    p The mininal requirement for team members (including leader) is 4. If a team has fewer than 4 members, ConnectED China will pick from competitors who doesn't have a team to fill in the vacancy.
+        
+        div.form-group.hidden#term_comp
+          div.col-sm-3#term_checkbox_C
+            input#term_agree_C_ID(name='term_agree_competitors', type='checkbox', required)
+          div.col-sm-9
+            p 
+              | By checking this box and putting my name in the form above, I hereby agree to the 
+              | #[a(role='button', data-toggle='modal', data-target='#disclaimer_C') ConnectED China 2015 Idea Fair Disclaimer for Competitors].
+            p 
+              | If the participant is under 18 years old, he/she must also be subject to the 
+              | #[a(role='button', data-toggle='modal', data-target='#disclaimer_C_P') ConnectED China 2015 Idea Fair Disclaimer for Underage Competitors].
+        //- div.form-group.hidden#term_audi
+        //-   div.col-sm-3#term_checkbox_A
+        //-     input#term_agree_A_ID(name='term_agree_audience', type='checkbox', required)
+        //-   div.col-sm-9
+        //-     p
+        //-       | By checking this box and putting my name in the form above, I hereby agree to the 
+        //-       | #[a(data-toggle='modal', data-target='disclaimer_A') ConnectED China 2015 Idea Fair Disclaimer for Audience].
+        div.form-group
+          div.col-sm-offset-10.col-sm-2
+            button#submitBtn.btn.btn-primary(type="button") Submit
+  
+  //- Ticket error modal
+  div.modal.fade#ticket_error
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          button(type="button", class="close" data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true")
+              i.fa.fa-times
+        div.modal-body
+          h3.text-center 请选择门票类型 Please Choose a Ticket Class
+        div.moda-footer
+          button(type="button", class="btn btn-default", data-dismiss="modal") Close
+  //- Disclaimer Modal
+  div.modal.fade#disclaimer_C
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          button(type="button", class="close" data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2.modal-title 参赛选手承诺书
+        div.modal-body
+          p 为保证第一届CED赛事的顺利进行，保护CED组委会及其主办方联筑文化传播有限公司（以下简称“联筑传播”）非商业目的使用参赛作品的权利，正确处理参赛项目的知识产权问题，参赛选手已充分了解并自愿承诺以下内容，参赛选手的法定监护人同意并认可被监护人所作的承诺：
+          p 一、承诺人已充分知晓大赛内容和流程并遵守大赛规则。承诺人提交的所有材料不要求退还，承诺人已对所有材料自行备份留底。
+          p 二、承诺人保证提交至CED组委会的所有数据、信息和材料均真实、准确、完整及有效，不侵犯任何第三方的合法权益。承诺人同意，CED组委会有权采取任何合法方式核实参赛资料的真实性、准确性、完整性和有效性，一旦发现有虚假信息将取消参赛资格。
+          p 三、承诺人向本次大赛所提交的参赛作品及所有相关材料的各部分内容均不侵犯第三方的知识产权或专有权利，参赛作品中所涉及的知识产权、商业秘密或技术秘密，均为参赛选手自身拥有或通过合法途径经权利人授权获得，承诺人对该参赛项目、作品及材料拥有完整、独立、合法的权利，无剽窃或抄袭等违法行为。如果参赛期间或之后由于有关知识产权或专有权利方面的问题所导致的纠纷和一切后果及法律责任由承诺人自行承担。
+          p 四、自将参赛作品送交大赛之日起，承诺人即同时同意CED组委会、联筑传播可以将其参赛作品、技术方案或设计、商业企划书在非商业用途下通过各种方式向社会展现，授予CED组委会、联筑传播对作品的权利包括但不限于复制权、发表权、发行权、放映权、摄制权、信息网络传播权等权利。
+          p 五、凡涉及参赛作品的相关报道、参赛作品的公众展示（包括但不限于在赛事现场向观众展示），均属于承诺人个体行为，参赛选手自行把握参赛作品中技术及商业内容的披露尺度，由此产生的纠纷和一切后果及法律责任由承诺人个人自行承担，与CED组委会、联筑传播无关。
+          p 六、承诺人同意，为参赛而提供的参赛材料将向大赛评委公开。因评选工作需要而使用参赛者提供的全部信息，无需另行征得承诺人的同意。CED组委会对参赛者提供的参赛材料承担保密义务。非CED组委会原因造成部分或者全部信息在评选过程中泄漏的，CED组委会、联筑传播不承担任何法律责任。承诺人同时也对通过本次大赛获得的任何信息承担保密义务，包括但不限于其他参赛选手的商业作品等。
+          p 七、如果参赛选手在本次大赛中获奖，承诺人承诺优先接受在CED组委会备案的投资机构的投资，优先选择与在CED组委会备案的商业机构合作。 
+          p 八、承诺人同意，除根据大赛规则所获的相关奖励之外，不向CED组委会、联筑传播或其指定的第三方就参赛作品请求任何报酬。承诺人根据大赛规则所获得的创业基金等奖励由队长保管，经全体队员同意后，可用于参赛项目的实践、推行。若创业基金的使用用途与获奖项目无关，联筑传播有权收回创业基金。
+          p 九、承诺人因参赛项目及作品的所有权、知识产权、商业秘密、技术秘密或使用权（授权）等原因而发生团队成员之间、团队成员与团队导师之间、团队之间或与其他权利主体之间的法律纠纷或矛盾的，承诺人承诺由此产生的一切责任与义务均由承诺人自行承担，与CED组委会、联筑传播无关。
+          p 十、如果承诺人违反以上承诺内容，CED组委会有权取消承诺人的比赛名次，承诺人应当向CED组委会联筑传播退还本次大赛中所获奖金和其他奖励。承诺人给CED组委会、主办单位、大赛工作人员、评委、其他参赛人员造成损失的，应当承担赔偿责任。
+          p 十一、承诺书自承诺人签署之日起生效。本次CED大赛最终解释权归大赛主办方联筑传播所有。
+          p 
+            strong 承诺人已充分阅读并了解本承诺书所列内容，承诺人自愿签署并严格、善意履行本承诺书，其中承诺事项自承诺书生效时即对各承诺人产生法律约束力。
+        div.modal-footer
+          button(type="button", class="btn btn-default", data-dismiss="modal") Close
+  div.modal.fade#disclaimer_C_P
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          button(type="button", class="close" data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2.modal-title 未成年参赛选手承诺书
+        div.modal-body
+          p 为保证第一届CED赛事的顺利进行，保护CED组委会及其主办方联筑文化传播有限公司（以下简称“联筑传播”）非商业目的使用参赛作品的权利，正确处理参赛项目的知识产权问题，参赛选手已充分了解并自愿承诺以下内容，参赛选手的法定监护人同意并认可被监护人所作的承诺：
+          p 一、承诺人已充分知晓大赛内容和流程并遵守大赛规则。承诺人提交的所有材料不要求退还，承诺人已对所有材料自行备份留底。
+          p 二、承诺人保证提交至CED组委会的所有数据、信息和材料均真实、准确、完整及有效，不侵犯任何第三方的合法权益。承诺人同意，CED组委会有权采取任何合法方式核实参赛资料的真实性、准确性、完整性和有效性，一旦发现有虚假信息将取消参赛资格。
+          p 三、承诺人向本次大赛所提交的参赛作品及所有相关材料的各部分内容均不侵犯第三方的知识产权或专有权利，参赛作品中所涉及的知识产权、商业秘密或技术秘密，均为参赛选手自身拥有或通过合法途径经权利人授权获得，承诺人对该参赛项目、作品及材料拥有完整、独立、合法的权利，无剽窃或抄袭等违法行为。如果参赛期间或之后由于有关知识产权或专有权利方面的问题所导致的纠纷和一切后果及法律责任由承诺人自行承担。
+          p 四、自将参赛作品送交大赛之日起，承诺人即同时同意CED组委会、联筑传播可以将其参赛作品、技术方案或设计、商业企划书在非商业用途下通过各种方式向社会展现，授予CED组委会、联筑传播对作品的权利包括但不限于复制权、发表权、发行权、放映权、摄制权、信息网络传播权等权利。
+          p 五、凡涉及参赛作品的相关报道、参赛作品的公众展示（包括但不限于在赛事现场向观众展示），均属于承诺人个体行为，参赛选手自行把握参赛作品中技术及商业内容的披露尺度，由此产生的纠纷和一切后果及法律责任由承诺人个人自行承担，与CED组委会、联筑传播无关。
+          p 六、承诺人同意，为参赛而提供的参赛材料将向大赛评委公开。因评选工作需要而使用参赛者提供的全部信息，无需另行征得承诺人的同意。CED组委会对参赛者提供的参赛材料承担保密义务。非CED组委会原因造成部分或者全部信息在评选过程中泄漏的，CED组委会、联筑传播不承担任何法律责任。承诺人同时也对通过本次大赛获得的任何信息承担保密义务，包括但不限于其他参赛选手的商业作品等。
+          p 七、如果参赛选手在本次大赛中获奖，承诺人承诺优先接受在CED组委会备案的投资机构的投资，优先选择与在CED组委会备案的商业机构合作。 
+          p 八、承诺人同意，除根据大赛规则所获的相关奖励之外，不向CED组委会、联筑传播或其指定的第三方就参赛作品请求任何报酬。承诺人根据大赛规则所获得的创业基金等奖励由队长保管，经全体队员同意后，可用于参赛项目的实践、推行。若创业基金的使用用途与获奖项目无关，联筑传播有权收回创业基金。
+          p 九、承诺人因参赛项目及作品的所有权、知识产权、商业秘密、技术秘密或使用权（授权）等原因而发生团队成员之间、团队成员与团队导师之间、团队之间或与其他权利主体之间的法律纠纷或矛盾的，承诺人承诺由此产生的一切责任与义务均由承诺人自行承担，与CED组委会、联筑传播无关。
+          p 十、如果承诺人违反以上承诺内容，CED组委会有权取消承诺人的比赛名次，承诺人应当向CED组委会联筑传播退还本次大赛中所获奖金和其他奖励。承诺人给CED组委会、主办单位、大赛工作人员、评委、其他参赛人员造成损失的，应当承担赔偿责任。
+          p 十一、承诺书自承诺人签署之日起生效。本次CED大赛最终解释权归大赛主办方联筑传播所有。
+          p 
+            strong 承诺人已充分阅读并了解本承诺书所列内容，承诺人自愿签署并严格、善意履行本承诺书，其中承诺事项自承诺书生效时即对各承诺人产生法律约束力。
+          p
+            strong _______是承诺人的法定监护人，已经充分阅读并了本承诺书的所列内容，承诺人作为未成年人签署和履行本承诺书已获得了法定监护人的认可。
+        div.modal-footer
+          button(type="button", class="btn btn-default", data-dismiss="modal") Close
+
+block append footerJS
+  script(src='/vendor/requirejs/require.js')
+  script.
+    requirejs(['dist/config'], function (config) {
+        requirejs(['register']);
+    });

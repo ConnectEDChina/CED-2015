@@ -1,0 +1,346 @@
+extends basic
+
+block append header
+  link(rel="stylesheet", href="/vendor/owl.carousel/dist/assets/owl.carousel.css", type="text/css")
+  link(rel="stylesheet", href="/vendor/bootstrap-select/dist/css/bootstrap-select.min.css", type="text/css")
+  link(rel="stylesheet", href="/stylesheets/style.css", type="text/css")
+
+block content
+  // slider
+  div.slider
+    div.overlay
+      div.container
+        div.information.move
+          div
+            i.fa.fa-map-marker
+            ="Shenzhen, China"
+          div
+            i.fa.fa-calendar
+            ="August 7 - 10, 2015"
+        div.title-wrapper
+          div.title.expand.move
+            h1 ConnectED China
+          div.title.expand.move
+            h1 2015 Startup Idea Fair
+        div.call-to-action.move
+          a(href="/registration") Register Now for the Competition!
+    div#slider.owl-carousel
+      img.slide.owl-lazy(data-src="/images/slide-4-dfl.jpg")
+      img.slide.owl-lazy(data-src="/images/slide-2-dfl.jpg")
+      img.slide.owl-lazy(data-src='/images/slide-3-dfl.jpg')
+      img.slide.owl-lazy(data-src='/images/slide-1-dfl.jpg')
+
+  section.block.background-color-grey-light
+    div.container
+      header
+        h2
+          a.roll What We Do
+    div.container
+      div.row
+        div.col-md-10.col-md-offset-1.text-center
+          h2 ConnectED-E代表创业精神「Entrepreneurship」，D代表梦想「Dream」<br>
+            small 意在为高中生以及大学生提供实现创业梦的舞台
+          p 第一届CED将于2015年8.7-8.10于中国深圳举行。此次活动旨在培养新型创新人才，通过“分组-实践-合作-评估”的方式，筛选出优秀团队予以创业启动资金奖励。
+          p 活动流程：参赛者报名→分组（自行组队或由CED进行匹配）→专业商业企划培训→头脑风暴（构思属于自己的创业项目）→团队研讨（在商学院领队的指导下）→商业计划书撰写→商业计划评估。活动中穿插名人讲座与社交晚会，向学员更独到地展示商业世界。
+  
+  //- our mission
+  section.block
+    div.container
+      header
+        h2
+          a.roll What We Offer
+    div.container.text-center
+      - var keys = Object.keys(intro);
+      div.row(style="margin-bottom: 50px")
+      - for (var i = 0; i < keys.length / 2; i++)
+        div.col-sm-6.col-md-4.col-lg-4
+          //- - var faString = "fa " + "fa-" + intro[keys[i]][1] + " fa-5x";
+          //- i(class=faString)
+          //- - var imgPath = "/images/" + "icon-" + (i + 1) + ".png";
+          - var imgPath = "/images/" + "icon-" + (i + 1) + "-dfl.gif";
+          img.img-responsive.center-block.intro-icon(src=imgPath, height="150", width="150")
+          h3 #{keys[i]}
+          p.text-center(style="color: #000; opacity: 1;") #{intro[keys[i]][0]}
+      div.row(style="margin-bottom: 50px")
+      - for (var i = keys.length / 2; i < keys.length; i++)
+        div.col-sm-6.col-md-4.col-lg-4
+          //- - var faString = "fa " + "fa-" + intro[keys[i]][1] + " fa-5x";
+          //- i(class=faString)
+          //- - var imgPath = "/images/" + "icon-" + (i + 1) + ".png";
+          - var imgPath = "/images/" + "icon-" + (i + 1) + "-dfl.gif";
+          img.img-responsive.center-block.intro-icon(src=imgPath, height="150", width="150")
+          h3 #{keys[i]}
+          p.text-center(style="color: #000; opacity: 1;") #{intro[keys[i]][0]}
+
+  // schedule
+  section.block.background-color-grey-light.schedule
+    div.container
+      header
+        h2
+          a.roll Pre-event Schedule
+      h4.text-center 本次大赛官方语言 (Lecture及策划书撰写) 为#[u 中文]
+      div.tab-content
+        div.tab-pane.active
+          div.panel-group
+            - for (var j = 0; j < Object.keys(pre_e_schedule).length; j++)
+              div.panel.panel-default
+                div.panel-header
+                  div.row
+                    div.col-xs-3
+                      div.time
+                        i.fa.fa-clock-o
+                        - var currentKey = Object.keys(pre_e_schedule)[j];
+                        figure #{currentKey}
+                    div.col-xs-9
+                      div.title
+                        - var currentInfo = pre_e_schedule[currentKey].split('@');
+                        - var currentEvent = currentInfo[0];
+                        - var currentDescription = currentInfo[1];
+                        if currentDescription === ''
+                          h3 #{currentEvent}
+                        else
+                          div.dropdown
+                            a(data-toggle="dropdown", aria-haspopup="true" role="button" aria-expanded="false") #{currentEvent}
+                              span.caret
+                            ul.dropdown-menu(role='menu')
+                              li.schedule-popup(role='presentation') #{currentDescription}
+  section.block.background-color-grey-light.schedule
+    div.container
+      header
+        h2 
+          a.roll On-event Schedule
+      h4.text-center 本次大赛官方语言 (Lecture及策划书撰写) 为#[u 中文]
+      ul.nav.nav-tabs(role="tablist")
+        li.active
+          a(href="#day1", role="tab", data-toggle="tab") Day 1
+        - for (var i = 2; i <= 4; i++)
+          li
+            - var hrefLink = "#day" + i;
+            a(href=hrefLink, role="tab", data-toggle="tab") Day #{i}
+      // tab panes
+      div.tab-content
+        - var days = ["day1", "day2", "day3", "day4"];
+        // active tab
+        - for (var i = 0; i < 1; i++)
+          - var currentID = days[i];
+          - var nestedID = "schedule-" + days[i];
+            div.tab-pane.active(id=currentID)
+              div.panel-group(id=nestedID)
+                - for (var j = 0; j < Object.keys(schedule[i]).length; j++)
+                  div.panel.panel-default
+                    div.panel-header
+                      div.row
+                        div.col-xs-3
+                          div.time
+                            i.fa.fa-clock-o
+                            - var currentKey = Object.keys(schedule[i])[j];
+                            figure #{currentKey}
+                        div.col-xs-9
+                          div.title
+                            - var currentInfo = schedule[i][currentKey].split('@');
+                            - var currentEvent = currentInfo[0];
+                            - var currentPlace = '@' + currentInfo[1];
+                            - var currentDescription = currentInfo[2];
+                            if currentDescription === ''
+                              h3 #{currentEvent}
+                                if (currentInfo[1] !== '')
+                                  strong.pull-right.loc #{currentPlace}
+                            else
+                              div.dropdown
+                                a(data-toggle="dropdown", aria-haspopup="true" role="button" aria-expanded="false") #{currentEvent}
+                                  span.caret
+                                ul.dropdown-menu(role='menu')
+                                  li.schedule-popup(role='presentation') !{currentDescription}
+                                if (currentInfo[1] !== '')
+                                  strong.pull-right.loc #{currentPlace}
+        // inactive tab
+        - for (var i = 1; i < 4; i++)
+          - var currentID = days[i];
+          - var nestedID = "schedule-" + days[i];
+            div.tab-pane(id=currentID)
+              div.panel-group(id=nestedID)
+                - for (var j = 0; j < Object.keys(schedule[i]).length; j++)
+                  div.panel.panel-default
+                    div.panel-header
+                      div.row
+                        div.col-xs-3
+                          div.time
+                            i.fa.fa-clock-o
+                            - var currentKey = Object.keys(schedule[i])[j];
+                            figure #{currentKey}
+                        div.col-xs-9
+                          div.title
+                            - var currentInfo = schedule[i][currentKey].split('@');
+                            - var currentEvent = currentInfo[0];
+                            - var currentPlace = '@' + currentInfo[1];
+                            - var currentDescription = currentInfo[2];
+                            if currentDescription === ''
+                              h3 #{currentEvent}
+                                if (currentInfo[1] !== '')
+                                  strong.pull-right.loc #{currentPlace}
+                            else
+                              div.dropdown
+                                a(data-toggle="dropdown", aria-haspopup="true" role="button" aria-expanded="false") #{currentEvent}
+                                  span.caret
+                                ul.dropdown-menu(role='menu')
+                                  li.schedule-popup(role='presentation') !{currentDescription}
+                                if (currentInfo[1] !== '')
+                                  strong.pull-right.loc #{currentPlace}
+  
+  // speakers
+  section.block
+    div.container
+      header
+        h2
+          a.roll Speakers
+      section.speakers
+        div.row
+          div.col-md-1
+          - for (var i = 1; i <= 5; i++)
+            - var currentSpeaker = speakers[i - 1];
+            div.col-md-2
+              div.speaker
+                aside.image
+                  - var dataTarget = "#modal" + i;
+                  div.plus-wrapper(data-toggle="modal", data-target=dataTarget)
+                    div.plus
+                      i.fa.fa-plus
+                  - var imagePath = '/images/speaker' + i + '.png';
+                  img(src=imagePath, alt="")
+                - var speaker_name = currentSpeaker['name'].split('_')[0] + "<br>" + currentSpeaker['name'].split('_')[1];
+                if (currentSpeaker['name'].split('_')[0] == "")
+                  - var speaker_name = currentSpeaker['name'].split('_')[1];
+                - var speaker_title = currentSpeaker['title'].split('_')[0] + "<br>" + currentSpeaker['title'].split('_')[1];
+                if (currentSpeaker['title'].split('_')[0] == "")
+                  - var speaker_title = currentSpeaker['title'].split('_')[1];
+                h3!= speaker_name
+                h4!= speaker_title
+
+  // partners
+  section.block.background-color-grey-light
+    div.container
+      header
+        h2 
+          a.roll Partners
+      div.container
+        div.row
+          - for (var i = 1; i <= 6; i++)
+            div.col-md-2.col-sm-2
+              - var imagePath = '/images/partner' + i + '-dfl.png';
+              img.center-block.partner-img(height="100", src=imagePath)
+
+  //- Ticket error modal
+  div.modal.fade#intention_error
+    div.modal-dialog
+      div.modal-content
+        div.modal-header
+          button(type="button", class="close" data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true")
+              i.fa.fa-times
+        div.modal-body
+          h3.text-center 请选择加入CED的意向 Please Choose your intention of joining CED
+        div.moda-footer
+          button(type="button", class="btn btn-default", data-dismiss="modal") Close
+
+  // Sign up form
+  section.block.sign-up#we_need_you
+    div.container
+      header
+        h2
+          a.roll We Need You!
+    div.container
+      div.row
+        div.col-md-8.col-md-offset-2
+          h2.text-center 如果你也怀揣梦想，请加入我们！
+          ul
+            li 如果你准备参加ConnectED China 2015 Startup Idea Fair，在这里邂逅与你同样渴望创业的同伴
+            li 如果你是一名有创业背景的Entrepreneur，想在这里分享经验指导晚辈，成为社交晚会的嘉宾
+            li 如果你是商学院的学生、参与创业的青年创业者，有意协助参赛团队制定商业计划，发掘潜力股
+            li 如果你仅仅是对创业有着浓厚的热情和渴望，想做一名活动的志愿者
+            li 如果你有深厚资质，有兴趣成为CED合作伙伴
+            li 或是你仅仅是想见证青年创业者的风采
+          h2.text-center CED邀请你一道，追寻梦想
+          h3.text-center 我们的报名已经正式开始，请点击下面的按钮填写大赛报名表。
+      div.row
+        div.col-xs-12.col-md-6.col-md-offset-3
+          a.btn.btn-success.btn-block(href="/registration") 报名ConnectED China 2015创业大赛!
+      //-     p.text-center 为了方便联系，请填写下面简短的表格。We won't spam you. But this is how we send further information to you.
+      //-     p.text-center 
+      //-       u 
+      //-         strong QQ邮箱的问题已经解决！如果您之前使用QQ邮箱提交信息但是没有收到邮件，无需再提交，您的信息已经成功提交。
+      //- form.background-color-default#sign-up-form
+      //-   div.form-wrapper.signup-form
+      //-     div.row
+      //-       div.col-md-2.col-sm-6
+      //-         div.form-group
+      //-           input.form-control(type="text", id="signup_name_ID", name="signup_name", placeholder="Name", required)
+      //-       div.col-md-3.col-sm-6
+      //-         div.form-group
+      //-           input.form-control(type="email", id="signup_email_ID", name="signup_email", placeholder="E-mail", required)
+      //-       div.col-md-3.col-sm-6
+      //-         div.form-group
+      //-           input.form-control(type="text", id="signup_school_ID", name="signup_school", placeholder="School (Optional)")
+      //-       div.col-md-2.col-sm-6
+      //-         div.form-group
+      //-           select.selectpicker(id="signup_intention_ID", name="signup_intention", required)
+      //-             option(value="") Intention
+      //-             option(value="as_competitor") Competitor(s)
+      //-             option(value="as_speaker") Speaker
+      //-             option(value="as_advisor") Advisor
+      //-             option(value="as_volunteer") Volunteer
+      //-             option(value="as_partner") Partner
+      //-             option(value="as_audience") Audience
+      //-       div.col-md-2.col-sm-6
+      //-         div.form-group
+      //-           button.btn.btn-default(type="button", id="signup_submit_ID") Submit
+      //-             i.fa.fa-angle-right
+      //- div.row
+      //-   div.col-md-10.col-md-offset-1
+      //-     h3.text-center.hidden#success_info_chn 您的信息已经成功提交 <br> 我们向您的邮箱发送了一封确认邮件。如果您没有收到邮件，请检查垃圾邮件。<br> 为了方便您收到我们的邮件，请将 "no-reply@connected-china.org" 加入您电子邮件服务商的白名单。
+
+
+  // Speakers Modal
+  - for (var i = 1; i <= speakers.length; i++)
+    - var modalID = "modal" + i;
+    div.modal.fade(id=modalID, tabindex="-1", role="dialog", aria-labelledby="modal1-label", aria-hidden="true")
+      div.modal-dialog
+        div.modal-content
+          - var currentSpeaker = speakers[i - 1];
+          div.modal-header
+            button.close(type="button", data-dismiss="modal", aria-label="Close")
+              span(aria-hidden="true") &times;
+            div.speaker-wrapper
+              div.speaker
+                - var imagePath = '/images/speaker' + i + '.png';
+                aside.image
+                  img(src=imagePath, alt="Speaker")
+              div.speaker-name
+                - var speaker_name = currentSpeaker['name'].split('_')[0] + "<br>" + currentSpeaker['name'].split('_')[1];
+                if (currentSpeaker['name'].split('_')[0] == "")
+                  - var speaker_name = currentSpeaker['name'].split('_')[1];
+                - var speaker_title = currentSpeaker['title'].split('_')[0] + "<br>" + currentSpeaker['title'].split('_')[1];
+                if (currentSpeaker['title'].split('_')[0] == "")
+                  - var speaker_title = currentSpeaker['title'].split('_')[1];
+                h1!= speaker_name
+                h2!= speaker_title
+                if (currentSpeaker['name'].split('_')[1] == "陈杰民")
+                  p 新浪微博
+                    a(href="http://weibo.com/shenzhenjacky", target="_blank") @深圳Jacky
+          div.modal-body
+            div.row
+              div.col-md-12
+                h3 Introduction
+                - var speaker_intro_en = currentSpeaker['intro_en'];
+                - var speaker_intro_chn = currentSpeaker['intro_chn'];
+                if (speaker_intro_en == "")
+                  p= speaker_intro_chn
+                else
+                  p= speaker_intro_en
+                  p=speaker_intro_chn
+         
+block append footerJS
+  script(src='/vendor/requirejs/require.js')
+  script.
+    requirejs(['dist/config'], function (config) {
+        requirejs(['home']);
+    });

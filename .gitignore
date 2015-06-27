@@ -1,0 +1,12 @@
+bower_components/
+node_modules/
+*.log
+data/
+public/vendor/
+public/dist/
+public/downloads/
+public/images/
+uploads/
+email_templates/
+tools/
+config.js

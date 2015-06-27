@@ -1,0 +1,33 @@
+div.navigation.navbar-fixed-top
+  div.container
+    header(class="navbar", role="banner")
+      div.navbar-header
+        button.navbar-toggle(type="button", data-toggle="collapse", data-target=".bs-navbar-collapse")
+          span.sr-only Toggle Navigation
+          each value in [1, 2, 3]
+            span.icon-bar
+        div#logo.navbar-brand.nav
+          a(href="/")
+            img.center-block(height="60", src="images/logo.png", alt="brand logo")
+      div.navigation-wrapper
+        nav.collapse.navbar-collapse.bs-navbar-collapse.navbar-right(role="navigation")
+          - var headNav = ['Home', 'Registration', 'About'];
+          ul.nav.navbar-nav
+            each value in headNav
+              - var hrefLink = '/' + value.toLowerCase();
+              if currentPage.toUpperCase() == value.toUpperCase()
+                li.active
+                  if value.toUpperCase() == "HOME"
+                    - hrefLink = '/';
+                  if value.toUpperCase() == "REGISTRATION"
+                    a(href=hrefLink) #{value}
+                  else
+                    a(href=hrefLink) #{value}
+              else
+                li
+                  if value.toUpperCase() == "HOME"
+                    - hrefLink = '/';
+                  if value.toUpperCase() == "REGISTRATION"
+                    a(href=hrefLink) #{value}
+                  else
+                    a(href=hrefLink) #{value}

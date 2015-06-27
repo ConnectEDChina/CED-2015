@@ -1,0 +1,198 @@
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width', initial-scale=1.0)
+    link(rel="stylesheet", href="/vendor/quill/dist/quill.snow.css", type="text/css")
+    link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.min.css", type="text/css")
+    link(rel="stylesheet", href="/stylesheets/editor.css")
+    title ConnectED China | Email Service
+    style.
+      .block {
+        padding: 50px 0;
+      }
+
+  body.home
+    section.block
+      div.container
+        form.email-form#email_form
+          div.form-group
+            label.control-label Password:
+            input.form-control#email_pwd_ID(type="password", placeholder="Confirmation Password", name="email_pwd", required)
+          div.form-group
+            label.control-label From:
+            p.form-control-static info@connected-china.org
+          div.form-group
+            label.control-label(for="email_receiver_ID") To:
+            select.form-control#receiver_ID(name="receiver", required)
+              option(value="") Select Receiver
+              option(value="p_vol") All Potential Volunteers
+              option(value="p_comp") All Potential Competitors
+              option(value="other") Custom Field
+            input.form-control.hidden#email_receiver_ID(type="text", placeholder="To (Comma separate multiple address)", name="email_receiver", required)
+            input.hidden#email_to_ID(type="text", name="email_to")
+          div.form-group
+            label.control-label Reply To:
+            p.form-control-static info@connected-china.org
+          div.form-group
+            label.control-label(for="email_cc_ID") cc:
+            input.form-control#email_cc_ID(type="text", placeholder="cc (Comma separate multiple address)", name="email_cc")
+          div.form-group
+            label.control-label(for="email_bcc_ID") Bcc:
+            p.form-control-static zhiyuan.ping@connected-china.org
+            p.form-control-static victor.wang@connected-china.org
+            p.form-control-static jialin.qu@connected-china.org
+            p.form-control-static jinhong.chen@connected-china.org
+            input.form-control#email_bcc_ID(type="text", placeholder="Bcc (Comma separate multiple address)", name="email_bcc")
+          div.form-group
+            label.control-label(for="email_subject_ID") Subject:
+            input.form-control#email_subject_ID(type="text", placeholder="Subject", name="email_subject")
+          textarea.hidden#email_content_ID(name="email_content")
+        #demo-container
+          p 
+           strong Content:
+          .quill-wrapper
+            #toolbar.toolbar
+              select.ql-font
+                option(value='sans-serif') Sans Serif
+                option(value='serif') Serif
+                option(value='monospace') Monospace
+              select.ql-size
+                option(value='10px') Small
+                option(value='13px', selected='') Normal
+                option(value='18px') Large
+                option(value='32px') Huge
+              span.ql-bold.ql-format-button
+              span.ql-italic.ql-format-button
+              span.ql-underline.ql-format-button
+              span.ql-strike.ql-format-button
+              select.ql-color
+                option(value='rgb(0, 0, 0)', label='rgb(0, 0, 0)')
+                option(value='rgb(230, 0, 0)', label='rgb(230, 0, 0)')
+                option(value='rgb(255, 153, 0)', label='rgb(255, 153, 0)')
+                option(value='rgb(255, 255, 0)', label='rgb(255, 255, 0)')
+                option(value='rgb(0, 138, 0)', label='rgb(0, 138, 0)')
+                option(value='rgb(0, 102, 204)', label='rgb(0, 102, 204)')
+                option(value='rgb(153, 51, 255)', label='rgb(153, 51, 255)')
+                option(value='rgb(255, 255, 255)', label='rgb(255, 255, 255)')
+                option(value='rgb(250, 204, 204)', label='rgb(250, 204, 204)')
+                option(value='rgb(255, 235, 204)', label='rgb(255, 235, 204)')
+                option(value='rgb(255, 255, 204)', label='rgb(255, 255, 204)')
+                option(value='rgb(204, 232, 204)', label='rgb(204, 232, 204)')
+                option(value='rgb(204, 224, 245)', label='rgb(204, 224, 245)')
+                option(value='rgb(235, 214, 255)', label='rgb(235, 214, 255)')
+                option(value='rgb(187, 187, 187)', label='rgb(187, 187, 187)')
+                option(value='rgb(240, 102, 102)', label='rgb(240, 102, 102)')
+                option(value='rgb(255, 194, 102)', label='rgb(255, 194, 102)')
+                option(value='rgb(255, 255, 102)', label='rgb(255, 255, 102)')
+                option(value='rgb(102, 185, 102)', label='rgb(102, 185, 102)')
+                option(value='rgb(102, 163, 224)', label='rgb(102, 163, 224)')
+                option(value='rgb(194, 133, 255)', label='rgb(194, 133, 255)')
+                option(value='rgb(136, 136, 136)', label='rgb(136, 136, 136)')
+                option(value='rgb(161, 0, 0)', label='rgb(161, 0, 0)')
+                option(value='rgb(178, 107, 0)', label='rgb(178, 107, 0)')
+                option(value='rgb(178, 178, 0)', label='rgb(178, 178, 0)')
+                option(value='rgb(0, 97, 0)', label='rgb(0, 97, 0)')
+                option(value='rgb(0, 71, 178)', label='rgb(0, 71, 178)')
+                option(value='rgb(107, 36, 178)', label='rgb(107, 36, 178)')
+                option(value='rgb(68, 68, 68)', label='rgb(68, 68, 68)')
+                option(value='rgb(92, 0, 0)', label='rgb(92, 0, 0)')
+                option(value='rgb(102, 61, 0)', label='rgb(102, 61, 0)')
+                option(value='rgb(102, 102, 0)', label='rgb(102, 102, 0)')
+                option(value='rgb(0, 55, 0)', label='rgb(0, 55, 0)')
+                option(value='rgb(0, 41, 102)', label='rgb(0, 41, 102)')
+                option(value='rgb(61, 20, 102)', label='rgb(61, 20, 102)')
+              select.ql-background
+                option(value='rgb(0, 0, 0)', label='rgb(0, 0, 0)')
+                option(value='rgb(230, 0, 0)', label='rgb(230, 0, 0)')
+                option(value='rgb(255, 153, 0)', label='rgb(255, 153, 0)')
+                option(value='rgb(255, 255, 0)', label='rgb(255, 255, 0)')
+                option(value='rgb(0, 138, 0)', label='rgb(0, 138, 0)')
+                option(value='rgb(0, 102, 204)', label='rgb(0, 102, 204)')
+                option(value='rgb(153, 51, 255)', label='rgb(153, 51, 255)')
+                option(value='rgb(255, 255, 255)', label='rgb(255, 255, 255)')
+                option(value='rgb(250, 204, 204)', label='rgb(250, 204, 204)')
+                option(value='rgb(255, 235, 204)', label='rgb(255, 235, 204)')
+                option(value='rgb(255, 255, 204)', label='rgb(255, 255, 204)')
+                option(value='rgb(204, 232, 204)', label='rgb(204, 232, 204)')
+                option(value='rgb(204, 224, 245)', label='rgb(204, 224, 245)')
+                option(value='rgb(235, 214, 255)', label='rgb(235, 214, 255)')
+                option(value='rgb(187, 187, 187)', label='rgb(187, 187, 187)')
+                option(value='rgb(240, 102, 102)', label='rgb(240, 102, 102)')
+                option(value='rgb(255, 194, 102)', label='rgb(255, 194, 102)')
+                option(value='rgb(255, 255, 102)', label='rgb(255, 255, 102)')
+                option(value='rgb(102, 185, 102)', label='rgb(102, 185, 102)')
+                option(value='rgb(102, 163, 224)', label='rgb(102, 163, 224)')
+                option(value='rgb(194, 133, 255)', label='rgb(194, 133, 255)')
+                option(value='rgb(136, 136, 136)', label='rgb(136, 136, 136)')
+                option(value='rgb(161, 0, 0)', label='rgb(161, 0, 0)')
+                option(value='rgb(178, 107, 0)', label='rgb(178, 107, 0)')
+                option(value='rgb(178, 178, 0)', label='rgb(178, 178, 0)')
+                option(value='rgb(0, 97, 0)', label='rgb(0, 97, 0)')
+                option(value='rgb(0, 71, 178)', label='rgb(0, 71, 178)')
+                option(value='rgb(107, 36, 178)', label='rgb(107, 36, 178)')
+                option(value='rgb(68, 68, 68)', label='rgb(68, 68, 68)')
+                option(value='rgb(92, 0, 0)', label='rgb(92, 0, 0)')
+                option(value='rgb(102, 61, 0)', label='rgb(102, 61, 0)')
+                option(value='rgb(102, 102, 0)', label='rgb(102, 102, 0)')
+                option(value='rgb(0, 55, 0)', label='rgb(0, 55, 0)')
+                option(value='rgb(0, 41, 102)', label='rgb(0, 41, 102)')
+                option(value='rgb(61, 20, 102)', label='rgb(61, 20, 102)')
+              span.ql-format-button.ql-list
+              span.ql-format-button.ql-bullet
+              select.ql-align
+                option(value='left', label='Left')
+                option(value='center', label='Center')
+                option(value='right', label='Right')
+                option(value='justify', label='Justify')
+              span.ql-format-button.ql-link
+              span.ql-format-button.ql-image
+            #editor.editor.ql-container.ql-snow
+              br
+              br
+              br
+              div Best Regards,
+              div ConnectED China
+            .ql-tooltip.ql-image-tooltip(style='left: -10000px;')
+              input.input(type='textbox')
+              .preview
+                span Preview
+              a.cancel(href='javascript:;') Cancel
+              a.insert(href='javascript:;') Insert
+            .ql-tooltip.ql-link-tooltip(style='left: -10000px;')
+              span.title Visit URL:&nbsp;
+              a.url(href='#', target='_blank')
+              input.input(type='text')
+              span &nbsp;-&nbsp;
+              a.change(href='javascript:;') Change
+              a.remove(href='javascript:;') Remove
+              a.done(href='javascript:;') Done
+            .ql-paste-manager(contenteditable='true')
+        div.row(style="margin-top: 30px;")
+          div.col-xs-3.pull-right
+            button.btn.btn-primary#send_email Send Email
+    div#wrong_modal.modal.fade
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') &times;
+            h4.modal-title Wrong Password
+          div.modal-body
+            p please try again.
+    div#right_modal.modal.fade
+      div.modal-dialog
+        div.modal-content
+          div.modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') &times;
+            h4.modal-title Email Sent
+          div.modal-body
+            p Your email is successfully sent.
+
+
+
+    script(type="text/javascript", src="/vendor/jquery/dist/jquery.min.js")
+    script(type="text/javascript", src="/vendor/bootstrap/dist/js/bootstrap.min.js")
+    script(type="text/javascript", src="/vendor/quill/dist/quill.min.js")
+    script(type="text/javascript", src="/vendor/jquery-validate/dist/jquery.validate.min.js")
+    script(type="text/javascript", src="/javascripts/email.js")

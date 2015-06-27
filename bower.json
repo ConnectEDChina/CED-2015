@@ -1,0 +1,28 @@
+{
+  "name": "connected",
+  "version": "0.1.0",
+  "description": "The web app for connected-china.",
+  "authors": [
+    "Victor Wang"
+  ],
+  "license": "ConnectED China 2015 CDL",
+  "homepage": "http://connected-china.org",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "fontawesome": "~4.3.0",
+    "bootstrap-select": "~1.6.4",
+    "jquery-validate": "~1.13.1",
+    "bootstrap-datepicker": "~1.4.0",
+    "quill": "~0.19.12",
+    "requirejs": "~2.1.18",
+    "owl.carousel": "*"
+  }
+}

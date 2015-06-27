@@ -1,0 +1,114 @@
+extends basic
+
+block append header
+  link(rel="stylesheet", href="/stylesheets/style.css", type="text/css")
+
+block content
+
+  section.block
+    //- About
+    div.container
+      div.row.team
+        div.col-md-12
+          div.tag-box.tag-box-v1
+            h2 ConnectED-E代表创业精神「Entrepreneurship」，D代表梦想「Dream」<br> 意在为高中生以及大学生提供实现创业梦的舞台。
+            p ConnectED Startup Idea Fair will be held for the very first time in Shenzhen, home to thousands of young entrepreneurs. The prime goal of CED is to help its participants develop a business proposal that is both sufficiently complex and substantially feasible. After the final evaluation by experienced investors, teams with best proposals will be rewarded some initiation funds.
+            p Event flow: register→divide participants into teams→professional training on business skills→ brainstorm→team workshops→draft business proposals→final evaluation. Guest lectures and social nights are included too.
+            p What CED has to offer:
+            ul
+              li Professional lectures on business, given by professor from Sun Yat-Sen University
+              li Graduate students acting as advisors to each team
+              li Guest lectures given by celebrities and young entrepreneurs
+              li Social nights that connect CED's participants  with professionals and college students
+            h2
+            p 第一届CED将于2015年8.7-8.10于中国深圳举行。此次活动旨在培养新型创新人才，通过“分组-实践-合作-评估”，筛选出优秀团队予以创业启动资金奖励。
+            p 活动流程：参赛者报名→分组（自行组队或由CED进行匹配）→专业商业企划培训→头脑风暴（构思属于自己的创业项目）→团队研讨（在商学院领队的指导下）→商业计划书撰写→商业计划评估。活动中穿插名人讲座与社交晚会，向学员更独到地展示商业世界。
+            p CED为学员提供独一无二的创业初体验：
+            ul
+              li 最权威的客座讲师进行培训
+              li 最专业的商学院领队进行指导
+              li 最具经验的投资人团队组成评委阵容
+              li 最成功的年轻企业家交流创业经验
+              li 最深层次的社交晚会提供交流平台
+      //- Founders
+      div.headline
+        h2 Founders 创始人
+      div.row.team
+        - for (var i = 0; i < founder.length; i++)
+          div.col-md-6
+            div.thumbnail-style
+              - var person = founder[i];
+              - var imgPath = "/images/" + person['img'];
+              img.img-responsive(src=imgPath, alt=person['name'])
+              - var name = person['name'].split('_')[0] + "<br>" + person['name'].split('_')[1];
+              h3!= name
+                - var title_en = person['title'].split('_')[0];
+                - var title_chn = person['title'].split('_')[1];
+                small.title!= title_en
+                small.title!= title_chn
+              - var intro_chn = person['intro_chn'];
+              - var intro_en = person['intro_en'];
+              p!= intro_en
+              p!= intro_chn
+
+      //- Executive Board
+      div.headline
+        h2 Executive Board 高级管理团队
+      div.team
+        - for (var i = 0; i < executive_board.length; i++)
+          div.row
+            div.thumbnail-style.col-md-4
+              - var person = executive_board[i];
+              - var imgPath = "/images/" + person['img'];
+              img.img-responsive(height="540", width="320", src=imgPath, alt=person['name'])
+              - var name = person['name'].split('_')[0] + "<br>" + person['name'].split('_')[1];
+            div.thumbnail-style.col-md-8
+              h3!= name
+                - var title_en = person['title'].split('_')[0];
+                - var title_chn = person['title'].split('_')[1];
+                small.title!= title_en
+                small.title!= title_chn
+              - var intro_chn = person['intro_chn'];
+              - var intro_en = person['intro_en'];
+              p!= intro_en
+              p!= intro_chn
+
+      //- Contacts
+      div.headline
+        h2 Contacts 区域联络人
+      div.team
+        - for (var i = 0; i < contacts.length; i++)
+          div.row
+            div.col-md-4.thumbnail-style
+              - var person = contacts[i];
+              - var imgPath = "/images/" + person['img'];
+              img.img-responsive(height="540", width="320", src=imgPath, alt=person['name'])
+              - var name = person['name'].split('_')[0] + "<br>" + person['name'].split('_')[1];
+            div.col-md-8.thumbnail-style
+              h3!= name
+                - var title_en = person['title'].split('_')[0];
+                - var title_chn = person['title'].split('_')[1];
+                small.title!= title_en
+                small.title!= title_chn
+              - var intro_chn = person['intro_chn'];
+              - var intro_en = person['intro_en'];
+              p!= intro_en
+              p!= intro_chn
+      //- Partners
+      div.headline
+        h2 Graphics Design 图像设计
+      div.row.team
+          div.col-md-4.thumbnail-style
+            img.img-responsive(src="/images/eos.jpg", alt="EOS")
+          div.col-md-8.thumbnail-style
+            h3 Exposure Organization of Student Photographers
+              small.title EOS摄影工坊
+            p Founded in early 2015, Exposure-Organization of Student Photographers (EOS) is the only operating photographical community at UC Berkeley. We provide photographing opportunities and services across and beyond the campus. We are also offering free workshops of photo taking, post editing, etc. to enhance members' abilities in photography and innovation. EOS aims to provide all students, who are interested in photography, a forum for exchanges, cooperation, and mutual learning.
+            p EOS摄影工坊成立于2015年初，是现阶段加州大学伯克利分校唯一一个正在营运的以摄影为核心的学生社团。我们在校园内外提供和摄影相关的机遇与服务，同时也举办以提高摄影技术和创造力为主要目的的研习会（Workshop）。EOS致力于在伯克利大学校园内建立起一个摄影主题的可用于交流、合作、以及相互学习的平台。
+
+block append footerJS
+  script(src='/vendor/requirejs/require.js')
+  script.
+    requirejs(['dist/config'], function (config) {
+        requirejs(['about']);
+    });

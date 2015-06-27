@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width', initial-scale=1.0)
+    block header
+      link(rel='stylesheet', href='/vendor/fontawesome/css/font-awesome.min.css', type="text/css")
+      link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.min.css", type="text/css")
+    title= title
+  body
+    div.wrapper
+      include nav.jade
+      block content
+      include footer.jade
+    block footerJS
